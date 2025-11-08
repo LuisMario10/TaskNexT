@@ -1,0 +1,23 @@
+import { Request, Response } from "express";
+import { TParamsProps } from "../@types";
+import { StatusCodes } from "http-status-codes";
+import { TaskRepository } from "../../domain";
+import { Validator } from "../../shared";
+
+export const getByID = (request: Request<TParamsProps>, response: Response) => {
+    const id = Validator.paramsPropsValidator.parse(request.params.id)
+
+    try {
+        return response.status(StatusCodes.OK).json({
+            statusCodes: StatusCodes.OK,
+            msg: "Resgatado registro da Tafera",
+            data: TaskRepository.findByID(id)
+            
+        })
+    } catch {
+        return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            statusCodes: StatusCodes.INTERNAL_SERVER_ERROR,
+            msg: "Erro interno no servidor"
+        })
+    }
+}
