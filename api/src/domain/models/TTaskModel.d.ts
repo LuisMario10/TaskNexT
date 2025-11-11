@@ -1,5 +1,5 @@
 export type TTaskModel = {
-    id: number;
+    id?: number;
     title: string;
     body: string;
     isComplete: boolean | undefined;

@@ -5,13 +5,15 @@ type TFindByID = ({ id }: Partial<TTaskModel>) => unknown;
 
 export const findByID: TFindByID = ({ id }) => {
     try {
-        const query: string = "SELECT title, body, is_complete, complete_date FROM tasks";
+        if(!id) throw new Error("Identificados (ID) não pode ser vazio");
+
+        const query: string = "SELECT * FROM tasks WHERE id = ?";
 
         const task = dataBaseConnection.prepare(query).get(id);
 
         return task;
 
     } catch {
-        return Error("Erro ao retornar Tarefa de ID fornecido");
+        throw new Error("Erro ao retornar Tarefa de ID fornecido");
     }
 }   

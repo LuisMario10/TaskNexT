@@ -1,15 +1,20 @@
 import { dataBaseConnection } from "../../../database";
 import { TTaskModel } from "../../models";
 
-type TUpdateTask = ({ id, title, body, isComplete, completeDate }: TTaskModel) => void;
+type TUpdateTask = (task: TTaskModel) => number;
 
 export const updateTask: TUpdateTask = ({ id, title, body, isComplete, completeDate }) => {
     try {
-        const query: string = "UPDATE tasks WHERE id = ? SET title = ?, body = ?, is_complete = ?, complete_date = ?";
+        const query = "UPDATE tasks SET title = ?, body = ?, is_complete = ?, complete_date = ? WHERE id = ?";
 
-        dataBaseConnection.prepare(query).run(id, title, body, isComplete, completeDate);
+        const result = dataBaseConnection.prepare(query).run(title, body, Number(isComplete), completeDate, id);
 
-    } catch {
-        return Error("Erro ao atualizar registro de Tarefa");
+        console.log("Linhas alteradas:", result.changes);
+
+        return result.changes;
+        
+    } catch (error) {
+        console.error(error);
+        throw new Error("Erro ao atualizar registro de Tarefa");
     }
-}
+};

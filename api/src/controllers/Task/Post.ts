@@ -18,7 +18,7 @@ export const post = (request: Request<{}, {}, TBodyProps>, response: Response) =
         return response.status(StatusCodes.CREATED).json({
             statusCodes: StatusCodes.CREATED,
             msg: "Tarefa criada com sucesso",
-            data: { id: id }
+            data: [{ id: id }]
         })
     } catch {
         return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({

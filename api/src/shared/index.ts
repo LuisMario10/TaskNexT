@@ -1,1 +1,1 @@
-export * from "./middleware/TaskControllerValidators"
+export * from "./middleware/Validators"

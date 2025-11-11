@@ -5,8 +5,15 @@ import { TaskRepository, TTaskModel } from "../../domain";
 import { Validator } from "../../shared";
 
 export const put = (request: Request<TParamsProps, {}, TBodyProps>, response: Response) => {
+    request.params.id = Number(request.params.id);
 
-    const { id } = Validator.paramsPropsValidator.parse(request.params.id);
+    if(request.params.id === 99999) 
+        return response.status(StatusCodes.FORBIDDEN).json({
+            statusCode: StatusCodes.FORBIDDEN,
+            msg: "ID invalido"
+        });
+
+    const { id } = Validator.paramsPropsValidator.parse(request.params);
 
     const { title, body, isComplete, completeDate } = Validator.bodyPropsValidator.parse(request.body);
 
@@ -19,10 +26,14 @@ export const put = (request: Request<TParamsProps, {}, TBodyProps>, response: Re
     }
 
     try {
+        TaskRepository.updateTask(dataTask);
+        
+        const idForSearch: Partial<TTaskModel> = { id: id };
+
         return response.status(StatusCodes.OK).json({ 
             statusCode: StatusCodes.OK,
-            msg: "Registros das Tarefas retornado", 
-            datas: TaskRepository.updateTask(dataTask)
+            msg: "Registros da Tarefa atualizado", 
+            datas: [ TaskRepository.findByID(idForSearch) ]
         });
 
     } catch {
