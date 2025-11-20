@@ -1,61 +1,42 @@
 import { useState } from "react"
 
+import { InputAdd, Task } from "./components";
+
 export default function App() {
-  const [value, setValue] = useState('');
 
   const [tasks, setTasks] = useState([
-    { id: 1, body: "Task 1", isComplete: false },
-    { id: 2, body: "Task 2", isComplete: false },
-    { id: 3, body: "Task 3", isComplete: false }
+    { id: 1, title: "Title 1", body: "Task 1", isComplete: false, completeDate: null },
+    { id: 2, title: "Title 2", body: "Task 2", isComplete: false, completeDate: null },
+    { id: 3, title: "Title 3", body: "Task 3", isComplete: false, completeDate: null },
+    { id: 4, title: "Title 4", body: "Task 4", isComplete: true, completeDate: "19/11/2025" }
+    { id: 5, title: "Title 5", body: "Task 5", isComplete: true, completeDate: "19/11/2025" }
   ]);
 
+  const handleAdd = (title: string, body: string) => 
+    setTasks([...tasks, { id: tasks.length + 1, title: title, body: body, isComplete: false, completeDate: null }]);
+  
+
+  const handleComplete = (id: number) => 
+    setTasks([...tasks.map((item) => ({ ...item, isComplete: item.id === id ? true : item.isComplete }))]);
+
+  const handleRemove = (id: number) => 
+    setTasks([...tasks.filter(item => item.id !== id)]);
+
   return (
-    <div className="flex bg-slate-500">
-      <div className="">
-        <input 
-          type="text" 
-          placeholder="Escreva a Tarefa"
-          value={ value }
-          onChange={ 
-            (event) => setValue(event.target.value )
-          }
-        />
-        <button 
-          onClick={ 
-            () => {
-              setTasks([...tasks, { id: tasks.length + 1, body: value, isComplete: false }])
-              setValue('')
-            }
-        }>
-          Adicionar
-        </button>
-      </div>
+    <div>
+      <InputAdd onAdd={ () => handleAdd }/>
       <ol>
         {
           tasks.map((task) => 
-            <li key={ task.id } className="flex justify-center bg-violet-600 text-black">
-              { task.body }
-
-              <br />
-
-              { task.isComplete ?  "Concluido" : "" }
-              
-              <button onClick={ 
-                () => 
-                  setTasks([
-                    ...tasks.map((item) => 
-                      ({ ...item, isComplete: item.id === task.id ? true : item.isComplete }))
-                  ])
-              }>
-                concluir
-              </button>
-
-              <button onClick={ () => setTasks([...tasks.filter(item => item.id !== task.id)]) }>
-                remover
-              </button>
-              <br />
-            </li>
-            
+            <Task 
+              id={ task.id }
+              title={ task.title }
+              body={ task.body }
+              isComplete={ task.isComplete }
+              completeDate={ task.completeDate }
+              onComplete={ () => handleComplete }
+              onRemove={ () => handleRemove }
+            />
           )
         }
       </ol>
