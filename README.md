@@ -1,7 +1,3 @@
-# ✅ TaskNext - Projeto de TODO list (meu primeiro projeto)
+# Projeto simples de TODO List para praticar e testar tecnologias
 
-- Iniciei usado apenas (HTML, CSS, JavaScript, NodeJS, Express JS, MySQL)
-  
-- Desenvolvi essa API enquanto estudava ExpressJS
-
-- Atualmente o projeto foi refatorado e utiliza as tecnologias (TypeScript, SQLite, React, TailwindCSS), alem das anteriores
+## Tecnologias utilizadas: ReactJS, TailwindCSS, ZOD, Express, SQLite3
