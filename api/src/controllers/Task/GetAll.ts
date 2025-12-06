@@ -4,6 +4,8 @@ import { TQueryProps } from "../@types";
 import { Validator } from "../../shared";
 import { TaskRepository } from "../../domain";
 
+// Integrar sistema de paginação
+
 export const getAll = (request: Request<{}, {}, {}, TQueryProps>, response: Response) => {
 
     const { page, filter, limit } = Validator.queryPropsValidator.parse(request.query);

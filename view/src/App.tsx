@@ -1,6 +1,6 @@
-import { useState } from "react"
-
+import { useState, useEffect } from "react"
 import { InputAdd, Task } from "./components";
+import { TodoAPI } from "./shared/services/api/TodoAPI";
 
 export default function App() {
 
@@ -8,7 +8,7 @@ export default function App() {
     { id: 1, title: "Title 1", body: "Task 1", isComplete: false, completeDate: null },
     { id: 2, title: "Title 2", body: "Task 2", isComplete: false, completeDate: null },
     { id: 3, title: "Title 3", body: "Task 3", isComplete: false, completeDate: null },
-    { id: 4, title: "Title 4", body: "Task 4", isComplete: true, completeDate: "19/11/2025" }
+    { id: 4, title: "Title 4", body: "Task 4", isComplete: true, completeDate: "19/11/2025" },
     { id: 5, title: "Title 5", body: "Task 5", isComplete: true, completeDate: "19/11/2025" }
   ]);
 
@@ -21,6 +21,10 @@ export default function App() {
 
   const handleRemove = (id: number) => 
     setTasks([...tasks.filter(item => item.id !== id)]);
+
+  useEffect(() => {
+    fetch("/api/todos").then(element => console.log(element.json));
+  }, [])
 
   return (
     <div>

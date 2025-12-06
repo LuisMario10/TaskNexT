@@ -2,6 +2,7 @@ import { useState } from "react";
 
 interface IInputAddProps {
     onAdd(): void;
+    
 }
 
 export const InputAdd = ({ onAdd }: IInputAddProps) => {
